@@ -30,11 +30,20 @@ export default function Home() {
   const [leftSidebarOpen, setLeftSidebarOpen] = useState(true);
 
   useEffect(() => {
-    // Fetch from API route (falls back to static file if API unavailable)
-    fetch("/api/detections")
+    // Fetch from tile server API (Railway) which pulls from GitHub
+    const TILE_SERVER = process.env.NEXT_PUBLIC_TILE_SERVER_URL || 'https://minningbackend-production.up.railway.app';
+    
+    fetch(`${TILE_SERVER}/api/detections`)
       .then((res) => {
         if (!res.ok) {
-          // Fallback to static file
+          // Fallback to local API route
+          return fetch("/api/detections");
+        }
+        return res;
+      })
+      .then((res) => {
+        if (!res.ok) {
+          // Final fallback to static file
           return fetch("/ghana_tarkwa_mining_wgs84.geojson");
         }
         return res;

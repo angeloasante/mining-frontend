@@ -1,9 +1,9 @@
 {
-  "last_run": "2026-02-23T06:00:00Z",
+  "last_run": "2026-02-23T13:30:55Z",
   "model_version": "48px_v3.7_2024-01-10",
-  "regions_scanned": "ghana_tarkwa,ghana_obuasi,ghana_bibiani,ghana_konongo,ghana_dunkwa",
+  "regions_scanned": "ghana_tarkwa,ghana_obuasi",
   "threshold": "0.8",
-  "run_type": "schedule",
-  "workflow_run_id": "initial",
-  "notes": "Initial deployment - replace with actual detection run"
+  "run_type": "workflow_dispatch",
+  "workflow_run_id": "22308179857",
+  "demo_mode": "false"
 }
