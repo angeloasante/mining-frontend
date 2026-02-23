@@ -26,7 +26,7 @@ const BASEMAPS = {
 
 type BasemapKey = keyof typeof BASEMAPS;
 
-const GEE_API = "http://localhost:5001";
+const GEE_API = process.env.NEXT_PUBLIC_TILE_SERVER_URL || "https://minningbackend-production.up.railway.app";
 
 export default function Map({ data, onSelectDetection, selectedDetection, probabilityFilter, showPoints }: MapProps) {
   const mapContainer = useRef<HTMLDivElement>(null);
