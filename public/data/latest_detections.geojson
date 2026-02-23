@@ -6,16 +6,16 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -1.8185585877628851,
-          5.292308781386074
+          -1.9259278386824625,
+          5.529572873433376
         ]
       },
       "properties": {
-        "probability": 0.9219,
-        "lat": 5.292309,
-        "lon": -1.818559,
+        "probability": 0.7567,
+        "lat": 5.529573,
+        "lon": -1.925928,
         "region": "Tarkwa-Nsuaem",
-        "detected_at": "2026-02-23T14:12:56.956835",
+        "detected_at": "2026-02-23T14:21:04.893107",
         "model_version": "mock_v1.0",
         "is_mock": true
       }
@@ -25,16 +25,16 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -2.001133270506601,
-          5.430131032596951
+          -1.7936948848136909,
+          5.207160450969257
         ]
       },
       "properties": {
-        "probability": 0.742,
-        "lat": 5.430131,
-        "lon": -2.001133,
+        "probability": 0.8885,
+        "lat": 5.20716,
+        "lon": -1.793695,
         "region": "Tarkwa-Nsuaem",
-        "detected_at": "2026-02-23T14:12:56.956848",
+        "detected_at": "2026-02-23T14:21:04.893121",
         "model_version": "mock_v1.0",
         "is_mock": true
       }
@@ -44,16 +44,16 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -1.9827291513752159,
-          5.20192253163538
+          -2.0003143408270554,
+          5.220340312180926
         ]
       },
       "properties": {
-        "probability": 0.7241,
-        "lat": 5.201923,
-        "lon": -1.982729,
+        "probability": 0.7188,
+        "lat": 5.22034,
+        "lon": -2.000314,
         "region": "Tarkwa-Nsuaem",
-        "detected_at": "2026-02-23T14:12:56.956853",
+        "detected_at": "2026-02-23T14:21:04.893125",
         "model_version": "mock_v1.0",
         "is_mock": true
       }
@@ -63,16 +63,225 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -2.0006092880408324,
-          5.539318151919951
+          -1.9505671915893852,
+          5.48006149315311
+        ]
+      },
+      "properties": {
+        "probability": 0.7414,
+        "lat": 5.480061,
+        "lon": -1.950567,
+        "region": "Tarkwa-Nsuaem",
+        "detected_at": "2026-02-23T14:21:04.893130",
+        "model_version": "mock_v1.0",
+        "is_mock": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.8997875454362447,
+          5.272661855667803
+        ]
+      },
+      "properties": {
+        "probability": 0.8712,
+        "lat": 5.272662,
+        "lon": -1.899788,
+        "region": "Tarkwa-Nsuaem",
+        "detected_at": "2026-02-23T14:21:04.893133",
+        "model_version": "mock_v1.0",
+        "is_mock": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.046849056071341,
+          5.08736531327627
+        ]
+      },
+      "properties": {
+        "probability": 0.7056,
+        "lat": 5.087365,
+        "lon": -2.046849,
+        "region": "Tarkwa-Nsuaem",
+        "detected_at": "2026-02-23T14:21:04.893137",
+        "model_version": "mock_v1.0",
+        "is_mock": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.7539779368599584,
+          5.159960335231334
+        ]
+      },
+      "properties": {
+        "probability": 0.6357,
+        "lat": 5.15996,
+        "lon": -1.753978,
+        "region": "Tarkwa-Nsuaem",
+        "detected_at": "2026-02-23T14:21:04.893141",
+        "model_version": "mock_v1.0",
+        "is_mock": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.0318499097272635,
+          5.312642568652593
+        ]
+      },
+      "properties": {
+        "probability": 0.9089,
+        "lat": 5.312643,
+        "lon": -2.03185,
+        "region": "Tarkwa-Nsuaem",
+        "detected_at": "2026-02-23T14:21:04.893148",
+        "model_version": "mock_v1.0",
+        "is_mock": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.8925476016347165,
+          5.165736753152199
+        ]
+      },
+      "properties": {
+        "probability": 0.6933,
+        "lat": 5.165737,
+        "lon": -1.892548,
+        "region": "Tarkwa-Nsuaem",
+        "detected_at": "2026-02-23T14:21:04.893152",
+        "model_version": "mock_v1.0",
+        "is_mock": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.9232049174790407,
+          5.09299853548717
+        ]
+      },
+      "properties": {
+        "probability": 0.9455,
+        "lat": 5.092999,
+        "lon": -1.923205,
+        "region": "Tarkwa-Nsuaem",
+        "detected_at": "2026-02-23T14:21:04.893156",
+        "model_version": "mock_v1.0",
+        "is_mock": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.9867707615143726,
+          5.091084071581312
+        ]
+      },
+      "properties": {
+        "probability": 0.9093,
+        "lat": 5.091084,
+        "lon": -1.986771,
+        "region": "Tarkwa-Nsuaem",
+        "detected_at": "2026-02-23T14:21:04.893159",
+        "model_version": "mock_v1.0",
+        "is_mock": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.0285108417786977,
+          5.519701761592368
+        ]
+      },
+      "properties": {
+        "probability": 0.6327,
+        "lat": 5.519702,
+        "lon": -2.028511,
+        "region": "Tarkwa-Nsuaem",
+        "detected_at": "2026-02-23T14:21:04.893167",
+        "model_version": "mock_v1.0",
+        "is_mock": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.1434864264052487,
+          5.434966262997464
+        ]
+      },
+      "properties": {
+        "probability": 0.7083,
+        "lat": 5.434966,
+        "lon": -2.143486,
+        "region": "Tarkwa-Nsuaem",
+        "detected_at": "2026-02-23T14:21:04.893170",
+        "model_version": "mock_v1.0",
+        "is_mock": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.1257263026008526,
+          5.274898757634428
+        ]
+      },
+      "properties": {
+        "probability": 0.9489,
+        "lat": 5.274899,
+        "lon": -2.125726,
+        "region": "Tarkwa-Nsuaem",
+        "detected_at": "2026-02-23T14:21:04.893173",
+        "model_version": "mock_v1.0",
+        "is_mock": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.0792833146646474,
+          5.479917852692896
         ]
       },
       "properties": {
         "probability": 0.6964,
-        "lat": 5.539318,
-        "lon": -2.000609,
+        "lat": 5.479918,
+        "lon": -2.079283,
         "region": "Tarkwa-Nsuaem",
-        "detected_at": "2026-02-23T14:12:56.956861",
+        "detected_at": "2026-02-23T14:21:04.893177",
         "model_version": "mock_v1.0",
         "is_mock": true
       }
@@ -82,16 +291,16 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -1.8165204528407877,
-          5.322845898724813
+          -1.9257765400748303,
+          5.453901665700248
         ]
       },
       "properties": {
-        "probability": 0.6374,
-        "lat": 5.322846,
-        "lon": -1.81652,
+        "probability": 0.8012,
+        "lat": 5.453902,
+        "lon": -1.925777,
         "region": "Tarkwa-Nsuaem",
-        "detected_at": "2026-02-23T14:12:56.956865",
+        "detected_at": "2026-02-23T14:21:04.893180",
         "model_version": "mock_v1.0",
         "is_mock": true
       }
@@ -101,16 +310,16 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -1.880625387640445,
-          5.336961135268914
+          -2.132833372565102,
+          5.248772859396674
         ]
       },
       "properties": {
-        "probability": 0.7957,
-        "lat": 5.336961,
-        "lon": -1.880625,
+        "probability": 0.6843,
+        "lat": 5.248773,
+        "lon": -2.132833,
         "region": "Tarkwa-Nsuaem",
-        "detected_at": "2026-02-23T14:12:56.956868",
+        "detected_at": "2026-02-23T14:21:04.893183",
         "model_version": "mock_v1.0",
         "is_mock": true
       }
@@ -120,263 +329,16 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -2.05804937613946,
-          5.471615429734532
+          -1.6435659811378458,
+          6.1604028876056836
         ]
       },
       "properties": {
-        "probability": 0.8727,
-        "lat": 5.471615,
-        "lon": -2.058049,
-        "region": "Tarkwa-Nsuaem",
-        "detected_at": "2026-02-23T14:12:56.956872",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.0807344629619653,
-          5.1513579028514185
-        ]
-      },
-      "properties": {
-        "probability": 0.5808,
-        "lat": 5.151358,
-        "lon": -2.080734,
-        "region": "Tarkwa-Nsuaem",
-        "detected_at": "2026-02-23T14:12:56.956878",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.1220682395512345,
-          5.2163716696094635
-        ]
-      },
-      "properties": {
-        "probability": 0.8049,
-        "lat": 5.216372,
-        "lon": -2.122068,
-        "region": "Tarkwa-Nsuaem",
-        "detected_at": "2026-02-23T14:12:56.956882",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.9629888263263697,
-          5.489704775355516
-        ]
-      },
-      "properties": {
-        "probability": 0.6528,
-        "lat": 5.489705,
-        "lon": -1.962989,
-        "region": "Tarkwa-Nsuaem",
-        "detected_at": "2026-02-23T14:12:56.956886",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.7588266418588907,
-          5.378154962934238
-        ]
-      },
-      "properties": {
-        "probability": 0.6847,
-        "lat": 5.378155,
-        "lon": -1.758827,
-        "region": "Tarkwa-Nsuaem",
-        "detected_at": "2026-02-23T14:12:56.956889",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.1433394591466044,
-          5.5141404831734775
-        ]
-      },
-      "properties": {
-        "probability": 0.7151,
-        "lat": 5.51414,
-        "lon": -2.143339,
-        "region": "Tarkwa-Nsuaem",
-        "detected_at": "2026-02-23T14:12:56.956894",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.9439453093876313,
-          5.189600509361976
-        ]
-      },
-      "properties": {
-        "probability": 0.879,
-        "lat": 5.189601,
-        "lon": -1.943945,
-        "region": "Tarkwa-Nsuaem",
-        "detected_at": "2026-02-23T14:12:56.956898",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.0485215221863036,
-          5.2004796752434554
-        ]
-      },
-      "properties": {
-        "probability": 0.6772,
-        "lat": 5.20048,
-        "lon": -2.048522,
-        "region": "Tarkwa-Nsuaem",
-        "detected_at": "2026-02-23T14:12:56.956901",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.9048747693950778,
-          5.469605465650755
-        ]
-      },
-      "properties": {
-        "probability": 0.8668,
-        "lat": 5.469605,
-        "lon": -1.904875,
-        "region": "Tarkwa-Nsuaem",
-        "detected_at": "2026-02-23T14:12:56.956903",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.8337503668777109,
-          5.094906759525951
-        ]
-      },
-      "properties": {
-        "probability": 0.8947,
-        "lat": 5.094907,
-        "lon": -1.83375,
-        "region": "Tarkwa-Nsuaem",
-        "detected_at": "2026-02-23T14:12:56.956907",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.0886631620028995,
-          5.477649266833873
-        ]
-      },
-      "properties": {
-        "probability": 0.727,
-        "lat": 5.477649,
-        "lon": -2.088663,
-        "region": "Tarkwa-Nsuaem",
-        "detected_at": "2026-02-23T14:12:56.956910",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.8266838956260818,
-          5.122779527349089
-        ]
-      },
-      "properties": {
-        "probability": 0.5135,
-        "lat": 5.12278,
-        "lon": -1.826684,
-        "region": "Tarkwa-Nsuaem",
-        "detected_at": "2026-02-23T14:12:56.956913",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.8141579550106222,
-          5.151091465639398
-        ]
-      },
-      "properties": {
-        "probability": 0.6505,
-        "lat": 5.151091,
-        "lon": -1.814158,
-        "region": "Tarkwa-Nsuaem",
-        "detected_at": "2026-02-23T14:12:56.956916",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.6084982410100872,
-          6.349291194916439
-        ]
-      },
-      "properties": {
-        "probability": 0.868,
-        "lat": 6.349291,
-        "lon": -1.608498,
+        "probability": 0.9234,
+        "lat": 6.160403,
+        "lon": -1.643566,
         "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.957959",
+        "detected_at": "2026-02-23T14:21:04.894291",
         "model_version": "mock_v1.0",
         "is_mock": true
       }
@@ -386,16 +348,16 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -1.675971221704534,
-          6.4479212185134
+          -1.4735681820137698,
+          6.200349667432408
         ]
       },
       "properties": {
-        "probability": 0.6786,
-        "lat": 6.447921,
-        "lon": -1.675971,
+        "probability": 0.5308,
+        "lat": 6.20035,
+        "lon": -1.473568,
         "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.957965",
+        "detected_at": "2026-02-23T14:21:04.894299",
         "model_version": "mock_v1.0",
         "is_mock": true
       }
@@ -405,16 +367,16 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -1.654345162988229,
-          6.449152453805915
+          -1.6967856606860925,
+          6.147178103366716
         ]
       },
       "properties": {
-        "probability": 0.7519,
-        "lat": 6.449152,
-        "lon": -1.654345,
+        "probability": 0.8641,
+        "lat": 6.147178,
+        "lon": -1.696786,
         "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.957969",
+        "detected_at": "2026-02-23T14:21:04.894303",
         "model_version": "mock_v1.0",
         "is_mock": true
       }
@@ -424,16 +386,16 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -1.733317828774628,
-          6.287957536648711
+          -1.734536603735205,
+          6.292319240520039
         ]
       },
       "properties": {
-        "probability": 0.9612,
-        "lat": 6.287958,
-        "lon": -1.733318,
+        "probability": 0.8655,
+        "lat": 6.292319,
+        "lon": -1.734537,
         "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.957973",
+        "detected_at": "2026-02-23T14:21:04.894312",
         "model_version": "mock_v1.0",
         "is_mock": true
       }
@@ -443,16 +405,16 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -1.6053560271611722,
-          6.251243628938536
+          -1.6472756606049803,
+          6.374719256896394
         ]
       },
       "properties": {
-        "probability": 0.9129,
-        "lat": 6.251244,
-        "lon": -1.605356,
+        "probability": 0.5468,
+        "lat": 6.374719,
+        "lon": -1.647276,
         "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.957977",
+        "detected_at": "2026-02-23T14:21:04.894316",
         "model_version": "mock_v1.0",
         "is_mock": true
       }
@@ -462,16 +424,16 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -1.7950155366723235,
-          6.311961664779345
+          -1.4653454587010317,
+          6.097156828120012
         ]
       },
       "properties": {
-        "probability": 0.8017,
-        "lat": 6.311962,
-        "lon": -1.795016,
+        "probability": 0.9588,
+        "lat": 6.097157,
+        "lon": -1.465345,
         "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.957980",
+        "detected_at": "2026-02-23T14:21:04.894319",
         "model_version": "mock_v1.0",
         "is_mock": true
       }
@@ -481,16 +443,16 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -1.4713627714805222,
-          6.060783775727948
+          -1.5255982580899319,
+          6.073125975337882
         ]
       },
       "properties": {
-        "probability": 0.6421,
-        "lat": 6.060784,
-        "lon": -1.471363,
+        "probability": 0.7364,
+        "lat": 6.073126,
+        "lon": -1.525598,
         "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.957983",
+        "detected_at": "2026-02-23T14:21:04.894322",
         "model_version": "mock_v1.0",
         "is_mock": true
       }
@@ -500,16 +462,16 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -1.4507117420958915,
-          6.200602723230681
+          -1.8012032005431209,
+          6.125547203380468
         ]
       },
       "properties": {
-        "probability": 0.5673,
-        "lat": 6.200603,
-        "lon": -1.450712,
+        "probability": 0.8466,
+        "lat": 6.125547,
+        "lon": -1.801203,
         "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.957986",
+        "detected_at": "2026-02-23T14:21:04.894326",
         "model_version": "mock_v1.0",
         "is_mock": true
       }
@@ -519,16 +481,16 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -1.464487399920999,
-          6.407095335556486
+          -1.7997735820658471,
+          6.36403233670082
         ]
       },
       "properties": {
-        "probability": 0.5149,
-        "lat": 6.407095,
-        "lon": -1.464487,
+        "probability": 0.9255,
+        "lat": 6.364032,
+        "lon": -1.799774,
         "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.957989",
+        "detected_at": "2026-02-23T14:21:04.894329",
         "model_version": "mock_v1.0",
         "is_mock": true
       }
@@ -538,16 +500,16 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -1.65718411149614,
-          6.375395085601311
+          -1.5098768147936026,
+          6.2290704105389
         ]
       },
       "properties": {
-        "probability": 0.8539,
-        "lat": 6.375395,
-        "lon": -1.657184,
+        "probability": 0.5711,
+        "lat": 6.22907,
+        "lon": -1.509877,
         "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.957992",
+        "detected_at": "2026-02-23T14:21:04.894333",
         "model_version": "mock_v1.0",
         "is_mock": true
       }
@@ -557,16 +519,16 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -1.533185187322922,
-          6.230449705513097
+          -1.5172209015553701,
+          6.230280773610315
         ]
       },
       "properties": {
-        "probability": 0.6888,
-        "lat": 6.23045,
-        "lon": -1.533185,
+        "probability": 0.5383,
+        "lat": 6.230281,
+        "lon": -1.517221,
         "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.957995",
+        "detected_at": "2026-02-23T14:21:04.894336",
         "model_version": "mock_v1.0",
         "is_mock": true
       }
@@ -576,16 +538,16 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -1.506127861003232,
-          6.060879085191926
+          -1.6727839375482147,
+          6.318998892506886
         ]
       },
       "properties": {
-        "probability": 0.7011,
-        "lat": 6.060879,
-        "lon": -1.506128,
+        "probability": 0.8532,
+        "lat": 6.318999,
+        "lon": -1.672784,
         "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.957998",
+        "detected_at": "2026-02-23T14:21:04.894339",
         "model_version": "mock_v1.0",
         "is_mock": true
       }
@@ -595,16 +557,16 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -1.465075927615068,
-          6.395733149625919
+          -1.555674942591936,
+          6.2087085907988575
         ]
       },
       "properties": {
-        "probability": 0.6071,
-        "lat": 6.395733,
-        "lon": -1.465076,
+        "probability": 0.5496,
+        "lat": 6.208709,
+        "lon": -1.555675,
         "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958001",
+        "detected_at": "2026-02-23T14:21:04.894342",
         "model_version": "mock_v1.0",
         "is_mock": true
       }
@@ -614,16 +576,16 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -1.6484193261074338,
-          6.0757274396018595
+          -1.8135696458473396,
+          6.211023653180419
         ]
       },
       "properties": {
-        "probability": 0.6379,
-        "lat": 6.075727,
-        "lon": -1.648419,
+        "probability": 0.9081,
+        "lat": 6.211024,
+        "lon": -1.81357,
         "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958004",
+        "detected_at": "2026-02-23T14:21:04.894345",
         "model_version": "mock_v1.0",
         "is_mock": true
       }
@@ -633,16 +595,16 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -1.5840912864388708,
-          6.389126074666328
+          -1.6314894933018396,
+          6.125896052117014
         ]
       },
       "properties": {
-        "probability": 0.7738,
-        "lat": 6.389126,
-        "lon": -1.584091,
+        "probability": 0.6872,
+        "lat": 6.125896,
+        "lon": -1.631489,
         "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958007",
+        "detected_at": "2026-02-23T14:21:04.894348",
         "model_version": "mock_v1.0",
         "is_mock": true
       }
@@ -652,16 +614,16 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -1.4756618618481723,
-          6.385493022687348
+          -1.5442629620481487,
+          6.288259898158928
         ]
       },
       "properties": {
-        "probability": 0.7251,
-        "lat": 6.385493,
-        "lon": -1.475662,
+        "probability": 0.6419,
+        "lat": 6.28826,
+        "lon": -1.544263,
         "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958010",
+        "detected_at": "2026-02-23T14:21:04.894351",
         "model_version": "mock_v1.0",
         "is_mock": true
       }
@@ -671,16 +633,16 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -1.6517768952604766,
-          6.337597316073239
+          -1.8255254411422293,
+          6.433024574621689
         ]
       },
       "properties": {
-        "probability": 0.8234,
-        "lat": 6.337597,
-        "lon": -1.651777,
+        "probability": 0.6557,
+        "lat": 6.433025,
+        "lon": -1.825525,
         "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958013",
+        "detected_at": "2026-02-23T14:21:04.894355",
         "model_version": "mock_v1.0",
         "is_mock": true
       }
@@ -690,16 +652,16 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -1.7632392791505376,
-          6.142284259319725
+          -1.7560020821957578,
+          6.340023697431805
         ]
       },
       "properties": {
-        "probability": 0.9523,
-        "lat": 6.142284,
-        "lon": -1.763239,
+        "probability": 0.5639,
+        "lat": 6.340024,
+        "lon": -1.756002,
         "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958018",
+        "detected_at": "2026-02-23T14:21:04.894358",
         "model_version": "mock_v1.0",
         "is_mock": true
       }
@@ -709,16 +671,16 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -1.7345447171927078,
-          6.099981200751205
+          -1.5087426803762372,
+          6.249275537523151
         ]
       },
       "properties": {
-        "probability": 0.6396,
-        "lat": 6.099981,
-        "lon": -1.734545,
+        "probability": 0.7222,
+        "lat": 6.249276,
+        "lon": -1.508743,
         "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958022",
+        "detected_at": "2026-02-23T14:21:04.894362",
         "model_version": "mock_v1.0",
         "is_mock": true
       }
@@ -728,16 +690,16 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -1.7942538137284867,
-          6.391245975510634
+          -1.8481050383982305,
+          6.3674821324174555
         ]
       },
       "properties": {
-        "probability": 0.8246,
-        "lat": 6.391246,
-        "lon": -1.794254,
+        "probability": 0.5858,
+        "lat": 6.367482,
+        "lon": -1.848105,
         "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958026",
+        "detected_at": "2026-02-23T14:21:04.894365",
         "model_version": "mock_v1.0",
         "is_mock": true
       }
@@ -747,16 +709,16 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -1.8005480477980798,
-          6.133224094505387
+          -1.5574130064078342,
+          6.142717407684909
         ]
       },
       "properties": {
-        "probability": 0.8435,
-        "lat": 6.133224,
-        "lon": -1.800548,
+        "probability": 0.9103,
+        "lat": 6.142717,
+        "lon": -1.557413,
         "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958033",
+        "detected_at": "2026-02-23T14:21:04.894371",
         "model_version": "mock_v1.0",
         "is_mock": true
       }
@@ -766,16 +728,16 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -1.648413882554886,
-          6.1419846331235926
+          -1.8338519034256269,
+          6.306350535952509
         ]
       },
       "properties": {
-        "probability": 0.7085,
-        "lat": 6.141985,
-        "lon": -1.648414,
+        "probability": 0.7489,
+        "lat": 6.306351,
+        "lon": -1.833852,
         "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958035",
+        "detected_at": "2026-02-23T14:21:04.894374",
         "model_version": "mock_v1.0",
         "is_mock": true
       }
@@ -785,525 +747,31 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -1.7575470613877344,
-          6.224477651607306
+          -1.5942234732443625,
+          6.126979237944876
         ]
       },
       "properties": {
-        "probability": 0.6073,
-        "lat": 6.224478,
-        "lon": -1.757547,
+        "probability": 0.895,
+        "lat": 6.126979,
+        "lon": -1.594223,
         "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958038",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.51658381453501,
-          6.087318292585651
-        ]
-      },
-      "properties": {
-        "probability": 0.6785,
-        "lat": 6.087318,
-        "lon": -1.516584,
-        "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958041",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.4936073116009205,
-          6.4167326938403155
-        ]
-      },
-      "properties": {
-        "probability": 0.601,
-        "lat": 6.416733,
-        "lon": -1.493607,
-        "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958044",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.726406540768916,
-          6.171332936774678
-        ]
-      },
-      "properties": {
-        "probability": 0.5616,
-        "lat": 6.171333,
-        "lon": -1.726407,
-        "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958047",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.4756929827807166,
-          6.230979862960877
-        ]
-      },
-      "properties": {
-        "probability": 0.6166,
-        "lat": 6.23098,
-        "lon": -1.475693,
-        "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958050",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.825404426882946,
-          6.146173996256997
-        ]
-      },
-      "properties": {
-        "probability": 0.8955,
-        "lat": 6.146174,
-        "lon": -1.825404,
-        "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958145",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.7977218103611654,
-          6.261739661404048
-        ]
-      },
-      "properties": {
-        "probability": 0.8936,
-        "lat": 6.26174,
-        "lon": -1.797722,
-        "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958149",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.776679827750323,
-          6.35803202959627
-        ]
-      },
-      "properties": {
-        "probability": 0.7746,
-        "lat": 6.358032,
-        "lon": -1.77668,
-        "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958152",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.5772977684150904,
-          6.272773185923665
-        ]
-      },
-      "properties": {
-        "probability": 0.5955,
-        "lat": 6.272773,
-        "lon": -1.577298,
-        "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958155",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.5956837020034371,
-          6.403597076995165
-        ]
-      },
-      "properties": {
-        "probability": 0.6363,
-        "lat": 6.403597,
-        "lon": -1.595684,
-        "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958158",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.7301608925350107,
-          6.350657765415841
-        ]
-      },
-      "properties": {
-        "probability": 0.8279,
-        "lat": 6.350658,
-        "lon": -1.730161,
-        "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958161",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.8380605484243662,
-          6.319435251589527
-        ]
-      },
-      "properties": {
-        "probability": 0.6169,
-        "lat": 6.319435,
-        "lon": -1.838061,
-        "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958164",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.5182347693048284,
-          6.398335288380993
-        ]
-      },
-      "properties": {
-        "probability": 0.5635,
-        "lat": 6.398335,
-        "lon": -1.518235,
-        "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958167",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.7518950204732502,
-          6.36141502604377
-        ]
-      },
-      "properties": {
-        "probability": 0.6896,
-        "lat": 6.361415,
-        "lon": -1.751895,
-        "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958170",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.6301420534482867,
-          6.0551810949306235
-        ]
-      },
-      "properties": {
-        "probability": 0.8612,
-        "lat": 6.055181,
-        "lon": -1.630142,
-        "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958177",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.513747555000701,
-          6.072100427037169
-        ]
-      },
-      "properties": {
-        "probability": 0.5131,
-        "lat": 6.0721,
-        "lon": -1.513748,
-        "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958180",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.7305227608627953,
-          6.114298266329306
-        ]
-      },
-      "properties": {
-        "probability": 0.8115,
-        "lat": 6.114298,
-        "lon": -1.730523,
-        "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958183",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.6863275067495975,
-          6.328124084435813
-        ]
-      },
-      "properties": {
-        "probability": 0.7904,
-        "lat": 6.328124,
-        "lon": -1.686328,
-        "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958188",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.5177918716660521,
-          6.185181331341186
-        ]
-      },
-      "properties": {
-        "probability": 0.6569,
-        "lat": 6.185181,
-        "lon": -1.517792,
-        "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958192",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.624584011521475,
-          6.096765918353454
-        ]
-      },
-      "properties": {
-        "probability": 0.5317,
-        "lat": 6.096766,
-        "lon": -1.624584,
-        "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958196",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.4571253029265512,
-          6.375706448215773
-        ]
-      },
-      "properties": {
-        "probability": 0.678,
-        "lat": 6.375706,
-        "lon": -1.457125,
-        "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958199",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.5437304705870143,
-          6.285964985031096
-        ]
-      },
-      "properties": {
-        "probability": 0.8898,
-        "lat": 6.285965,
-        "lon": -1.54373,
-        "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958206",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.709957523715474,
-          6.440388976672393
-        ]
-      },
-      "properties": {
-        "probability": 0.5833,
-        "lat": 6.440389,
-        "lon": -1.709958,
-        "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958209",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.722493923206312,
-          6.395350329259726
-        ]
-      },
-      "properties": {
-        "probability": 0.8646,
-        "lat": 6.39535,
-        "lon": -1.722494,
-        "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958212",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.6894754795218292,
-          6.068267726180934
-        ]
-      },
-      "properties": {
-        "probability": 0.9501,
-        "lat": 6.068268,
-        "lon": -1.689475,
-        "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958215",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.6582318622055638,
-          6.33266897406084
-        ]
-      },
-      "properties": {
-        "probability": 0.7827,
-        "lat": 6.332669,
-        "lon": -1.658232,
-        "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958218",
-        "model_version": "mock_v1.0",
-        "is_mock": true
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.581202265595006,
-          6.235681231785728
-        ]
-      },
-      "properties": {
-        "probability": 0.938,
-        "lat": 6.235681,
-        "lon": -1.581202,
-        "region": "Obuasi",
-        "detected_at": "2026-02-23T14:12:56.958221",
+        "detected_at": "2026-02-23T14:21:04.894377",
         "model_version": "mock_v1.0",
         "is_mock": true
       }
     }
   ],
   "metadata": {
-    "generated_at": "2026-02-23T14:12:56.958247",
+    "generated_at": "2026-02-23T14:21:04.894409",
     "model_version": "48px_v3.7_2024-01-10",
     "threshold": 0.8,
     "regions": [
       "ghana_tarkwa",
       "ghana_obuasi"
     ],
-    "total_detections": 68,
-    "high_confidence": 6,
-    "medium_confidence": 31
+    "total_detections": 40,
+    "high_confidence": 9,
+    "medium_confidence": 16
   }
 }

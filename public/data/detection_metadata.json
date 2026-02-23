@@ -1,9 +1,9 @@
 {
-  "last_run": "2026-02-23T14:12:57Z",
+  "last_run": "2026-02-23T14:21:06Z",
   "model_version": "48px_v3.7_2024-01-10",
   "regions_scanned": "ghana_tarkwa,ghana_obuasi",
   "threshold": "0.8",
   "run_type": "workflow_dispatch",
-  "workflow_run_id": "22309706289",
+  "workflow_run_id": "22309990974",
   "demo_mode": "false"
 }
