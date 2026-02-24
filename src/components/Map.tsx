@@ -114,6 +114,10 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
         maxZoom: 19,
         minZoom: 1.5,
         renderWorldCopies: false, // Disable flat world copies for cleaner globe view
+        dragPan: true,
+        dragRotate: true,
+        touchZoomRotate: true,
+        touchPitch: true,
       });
 
       mapRef.current = map;
@@ -434,9 +438,9 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
   return (
     <div 
       style={{ width: "100%", height: "100%", position: "relative", minHeight: "500px" }}
-      onMouseMove={handleMouseMove}
-      onMouseUp={() => setIsDragging(false)}
-      onMouseLeave={() => setIsDragging(false)}
+      onMouseMove={isDragging ? handleMouseMove : undefined}
+      onMouseUp={isDragging ? () => setIsDragging(false) : undefined}
+      onMouseLeave={isDragging ? () => setIsDragging(false) : undefined}
     >
       {/* Main Map (Current/2026) - always full width */}
       <div
