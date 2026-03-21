@@ -1,5 +1,7 @@
 "use client";
 
+import { Search } from "lucide-react";
+
 interface FilterPanelProps {
   probabilityFilter: number;
   onFilterChange: (value: number) => void;
@@ -9,7 +11,7 @@ export default function FilterPanel({ probabilityFilter, onFilterChange }: Filte
   return (
     <div className="glass-card p-4">
       <h3 className="text-sm font-semibold text-white mb-4 flex items-center space-x-2">
-        <span className="text-[#0B571A]">🔍</span>
+        <Search size={16} className="text-[#0B571A]" />
         <span>Filters</span>
       </h3>
       

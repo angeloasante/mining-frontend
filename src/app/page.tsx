@@ -1,11 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import dynamic from "next/dynamic";
 import { MiningGeoJSON, MiningDetection } from "@/types/geojson";
-import FilterPanel from "@/components/FilterPanel";
-import DetectionList from "@/components/DetectionList";
-import StatsPanel from "@/components/StatsPanel";
+import { MapPin, ChevronDown, ChevronUp, X } from "lucide-react";
 
 const Map = dynamic(() => import("@/components/Map"), { 
   ssr: false,
@@ -19,6 +17,18 @@ const Map = dynamic(() => import("@/components/Map"), {
   ),
 });
 
+// Format region name for display
+function formatRegionName(region: string | undefined): string {
+  if (!region) return "";
+  // Convert "ghana_tarkwa" or "Tarkwa-Nsuaem" to readable "Tarkwa-Nsuaem, Ghana"
+  const cleaned = region
+    .replace(/^ghana_/i, "")
+    .replace(/_/g, " ")
+    .replace(/-/g, "-");
+  // Capitalize each word
+  return cleaned.split(" ").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+}
+
 export default function Home() {
   const [data, setData] = useState<MiningGeoJSON | null>(null);
   const [loading, setLoading] = useState(true);
@@ -26,8 +36,41 @@ export default function Home() {
   const [probabilityFilter, setProbabilityFilter] = useState(0.5);
   const [selectedDetection, setSelectedDetection] = useState<MiningDetection | null>(null);
   const [showPoints, setShowPoints] = useState(true);
-  const [currentTime, setCurrentTime] = useState(new Date());
-  const [leftSidebarOpen, setLeftSidebarOpen] = useState(true);
+  const [locationName, setLocationName] = useState<string | null>(null);
+  const [loadingLocation, setLoadingLocation] = useState(false);
+  const [detectionPanelExpanded, setDetectionPanelExpanded] = useState(true);
+
+  // Reverse geocode to get location name
+  const fetchLocationName = useCallback(async (lat: number, lon: number) => {
+    setLoadingLocation(true);
+    try {
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=14&addressdetails=1`,
+        { headers: { "User-Agent": "MineWatchAI/1.0" } }
+      );
+      const data = await response.json();
+      if (data.address) {
+        const { village, town, city, county, state, country } = data.address;
+        const parts = [village || town || city, county || state, country].filter(Boolean);
+        setLocationName(parts.slice(0, 2).join(", "));
+      } else {
+        setLocationName(null);
+      }
+    } catch {
+      setLocationName(null);
+    } finally {
+      setLoadingLocation(false);
+    }
+  }, []);
+
+  // Fetch location when detection is selected
+  useEffect(() => {
+    if (selectedDetection) {
+      fetchLocationName(selectedDetection.properties.lat, selectedDetection.properties.lon);
+    } else {
+      setLocationName(null);
+    }
+  }, [selectedDetection, fetchLocationName]);
 
   useEffect(() => {
     // Fetch from tile server API (Railway) which pulls from GitHub
@@ -62,11 +105,6 @@ export default function Home() {
       });
   }, []);
 
-  useEffect(() => {
-    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
-
   if (loading) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
@@ -96,181 +134,124 @@ export default function Home() {
 
   return (
     <div className="h-screen bg-black overflow-hidden flex flex-col">
-      {/* Top Header Bar */}
-      <header className="h-14 bg-black/90 backdrop-blur-md border-b border-[#0B571A]/30 flex items-center justify-between px-6 z-50">
-        <div className="flex items-center space-x-4">
-          {/* Left Sidebar Toggle */}
-          <button
-            onClick={() => setLeftSidebarOpen(!leftSidebarOpen)}
-            className="w-8 h-8 rounded-lg bg-black/60 border border-[#0B571A]/30 flex items-center justify-center text-gray-400 hover:text-white hover:border-[#0B571A] transition-all"
-          >
-            {leftSidebarOpen ? "◀" : "▶"}
-          </button>
-          <div className="flex items-center space-x-3">
-            <div className="w-9 h-9 rounded-lg bg-[#0B571A] flex items-center justify-center shadow-lg shadow-[#0B571A]/30">
-              <span className="text-white text-lg">🛰️</span>
-            </div>
-            <div>
-              <h1 className="text-lg font-bold text-[#0B571A]">GhanaMine Detect</h1>
-            </div>
-          </div>
-        </div>
-
-        {/* Center Search */}
-        <div className="flex-1 max-w-md mx-8">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Type here to search..."
-              className="w-full bg-black/80 border border-[#0B571A]/30 rounded-full px-5 py-2 text-sm text-gray-300 placeholder-gray-500 focus:outline-none focus:border-[#0B571A] transition-colors"
-            />
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#0B571A]"></div>
-          </div>
-        </div>
-
-        {/* Right Side */}
-        <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-2 px-3 py-1.5 bg-black/60 rounded-lg border border-[#0B571A]/30">
-            <span className="text-sm text-gray-400">🌍</span>
-            <span className="text-sm text-gray-300">Tactical View</span>
-          </div>
-          <div className="w-8 h-8 rounded-full bg-[#0B571A] flex items-center justify-center text-white text-sm font-bold shadow-lg shadow-[#0B571A]/30">
-            TM
-          </div>
-          <button className="w-8 h-8 rounded-lg bg-black/60 border border-[#0B571A]/30 flex items-center justify-center text-gray-400 hover:text-white transition-colors">
-            ⚙️
-          </button>
-        </div>
-      </header>
-
       {/* Main Content */}
       <div className="flex-1 flex overflow-hidden">
-        {/* Left Sidebar */}
-        <aside className={`${leftSidebarOpen ? 'w-72' : 'w-0'} bg-black/80 backdrop-blur-md border-r border-[#0B571A]/30 flex flex-col overflow-hidden transition-all duration-300`}>
-          <div className={`flex-1 overflow-y-auto p-4 space-y-4 ${leftSidebarOpen ? 'opacity-100' : 'opacity-0'} transition-opacity duration-200`}>
-            {/* Display Controls */}
-            <div className="glass-card p-4">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center space-x-2">
-                  <span className="text-[#0B571A]">📡</span>
-                  <span className="font-semibold text-white">Display Controls</span>
-                </div>
-                <span className="text-gray-500">▼</span>
-              </div>
-
-              {/* Detection Toggle */}
-              <div className="flex items-center justify-between py-2">
-                <div className="flex items-center space-x-2">
-                  <span className="text-[#0B571A]">🎯</span>
-                  <span className="text-gray-300 text-sm">Detections</span>
-                </div>
-                <button
-                  onClick={() => setShowPoints(!showPoints)}
-                  className={`px-3 py-1 rounded text-xs font-medium transition-all ${
-                    showPoints
-                      ? "bg-[#0B571A] text-white shadow-lg shadow-[#0B571A]/30"
-                      : "bg-gray-700/50 text-gray-400"
-                  }`}
-                >
-                  {showPoints ? "On" : "Off"}
-                </button>
-              </div>
-            </div>
-
-            {/* Filters */}
-            <FilterPanel 
-              probabilityFilter={probabilityFilter} 
-              onFilterChange={setProbabilityFilter} 
-            />
-
-            {/* Stats Cards */}
-            <StatsPanel data={data} probabilityFilter={probabilityFilter} />
-
-            {/* Detection List */}
-            <DetectionList 
-              data={data} 
-              probabilityFilter={probabilityFilter} 
-              onSelectDetection={setSelectedDetection}
-              selectedDetection={selectedDetection}
-            />
-          </div>
-
-          {/* Bottom DateTime */}
-          <div className="p-4 border-t border-[#0B571A]/30">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-2 px-3 py-2 bg-[#0B571A]/20 rounded-lg">
-                <span className="text-[#0B571A]">📅</span>
-                <span className="text-sm text-white">
-                  {currentTime.toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' })}
-                </span>
-              </div>
-              <div className="flex items-center space-x-2 text-gray-400">
-                <span>🕐</span>
-                <span className="text-sm font-mono">
-                  {currentTime.toLocaleTimeString('en-US', { hour12: false })}
-                </span>
-              </div>
-            </div>
-          </div>
-        </aside>
-
-        {/* Map Area */}
+        {/* Map Area - Full Width */}
         <main className="flex-1 relative">
-          {/* Radar Overlay */}
-          <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden">
-            {/* Compass Lines */}
-            <div className="absolute top-0 left-1/2 w-px h-full bg-gradient-to-b from-[#0B571A]/30 via-transparent to-[#0B571A]/30"></div>
-            <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-[#0B571A]/30 via-transparent to-[#0B571A]/30"></div>
-            
-            {/* Radar Circles */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border border-[#0B571A]/10"></div>
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full border border-[#0B571A]/10"></div>
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full border border-[#0B571A]/10"></div>
-            
-            {/* Corner Markers */}
-            <div className="absolute top-4 left-1/2 -translate-x-1/2 text-[#0B571A]/50 text-xs">360°</div>
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[#0B571A]/50 text-xs">180°</div>
-            <div className="absolute top-1/2 left-4 -translate-y-1/2 text-[#0B571A]/50 text-xs">270°</div>
-            <div className="absolute top-1/2 right-4 -translate-y-1/2 text-[#0B571A]/50 text-xs">90°</div>
-          </div>
-
           {/* Map */}
           <Map 
             data={data} 
             onSelectDetection={setSelectedDetection} 
             selectedDetection={selectedDetection} 
             probabilityFilter={probabilityFilter} 
-            showPoints={showPoints} 
+            onFilterChange={setProbabilityFilter}
+            showPoints={showPoints}
+            onToggleShowPoints={() => setShowPoints(!showPoints)}
+            detectionCount={filteredData.length}
           />
 
-          {/* Selected Detection Info - Moved from right sidebar */}
+          {/* Selected Detection Info */}
           {selectedDetection && (
             <div className="absolute top-6 right-6 z-20">
-              <div className="glass-card p-4 w-64">
-                <h3 className="text-sm font-semibold text-white mb-3 flex items-center space-x-2">
-                  <span className="text-[#0B571A]">📍</span>
-                  <span>Selected Detection</span>
-                </h3>
+              <div className="glass-card p-4 w-72">
+                {/* Header with collapse/close buttons */}
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-sm font-semibold text-white flex items-center space-x-2">
+                    <MapPin size={16} className="text-[#0B571A]" />
+                    <span>Selected Detection</span>
+                  </h3>
+                  <div className="flex items-center space-x-1">
+                    <button
+                      onClick={() => setDetectionPanelExpanded(!detectionPanelExpanded)}
+                      className="w-6 h-6 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+                    >
+                      {detectionPanelExpanded ? <ChevronUp size={14} className="text-gray-400" /> : <ChevronDown size={14} className="text-gray-400" />}
+                    </button>
+                    <button
+                      onClick={() => setSelectedDetection(null)}
+                      className="w-6 h-6 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+                    >
+                      <X size={14} className="text-gray-400" />
+                    </button>
+                  </div>
+                </div>
+                
+                {/* Collapsible content */}
+                {detectionPanelExpanded && (
+                  <>
+                    {/* Location Name */}
+                    <div className="mb-3 pb-3 border-b border-white/10">
+                  {loadingLocation ? (
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 rounded-full border border-[#0B571A]/50 border-t-[#0B571A] animate-spin"></div>
+                      <span className="text-xs text-gray-400">Finding location...</span>
+                    </div>
+                  ) : (
+                    <>
+                      <p className="text-white font-medium text-base">
+                        {locationName || formatRegionName(selectedDetection.properties.region) || "Unknown Location"}
+                      </p>
+                      {selectedDetection.properties.region && locationName && (
+                        <p className="text-xs text-gray-400 mt-1">
+                          Region: {formatRegionName(selectedDetection.properties.region)}
+                        </p>
+                      )}
+                    </>
+                  )}
+                </div>
+
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-400">Confidence</span>
-                    <span className="text-[#0B571A] font-bold">
+                    <span className={`font-bold ${
+                      selectedDetection.properties.probability >= 0.9 
+                        ? "text-red-400" 
+                        : selectedDetection.properties.probability >= 0.7 
+                          ? "text-orange-400" 
+                          : "text-[#0B571A]"
+                    }`}>
                       {(selectedDetection.properties.probability * 100).toFixed(1)}%
                     </span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-400">Latitude</span>
+                    <span className="text-gray-400">Coordinates</span>
                     <span className="text-cyan-400 font-mono text-xs">
-                      {selectedDetection.properties.lat.toFixed(5)}°
+                      {selectedDetection.properties.lat.toFixed(5)}°, {selectedDetection.properties.lon.toFixed(5)}°
                     </span>
                   </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-400">Longitude</span>
-                    <span className="text-cyan-400 font-mono text-xs">
-                      {selectedDetection.properties.lon.toFixed(5)}°
-                    </span>
-                  </div>
+                  {selectedDetection.properties.detected_at && (
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-400">Detected</span>
+                      <span className="text-gray-300 text-xs">
+                        {new Date(selectedDetection.properties.detected_at).toLocaleDateString()}
+                      </span>
+                    </div>
+                  )}
                 </div>
+
+                {/* Action Buttons */}
+                <div className="mt-3 pt-3 border-t border-white/10 flex gap-2">
+                  <a
+                    href={`https://www.google.com/maps?q=${selectedDetection.properties.lat},${selectedDetection.properties.lon}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 text-center text-xs bg-white/5 hover:bg-white/10 text-gray-300 py-2 px-3 rounded-lg transition-colors"
+                  >
+                    🗺️ Google Maps
+                  </a>
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(
+                        `${selectedDetection.properties.lat.toFixed(6)}, ${selectedDetection.properties.lon.toFixed(6)}`
+                      );
+                    }}
+                    className="flex-1 text-center text-xs bg-white/5 hover:bg-white/10 text-gray-300 py-2 px-3 rounded-lg transition-colors"
+                  >
+                    📋 Copy Coords
+                  </button>
+                </div>
+                  </>
+                )}
               </div>
             </div>
           )}

@@ -2,13 +2,25 @@
 
 import { useEffect, useRef, useState } from "react";
 import { MiningGeoJSON, MiningDetection } from "@/types/geojson";
+import { StatsButton, DisplayControlButton } from "./MapControls";
+import { DetectionListPanel } from "./DetectionListPanel";
+import { WebGLErrorScreen } from "./WebGLErrorScreen";
+import { FloatingFilterButton } from "./FloatingFilterButton";
+import { SearchReportButton } from "./SearchReportButton";
+import { RefreshCw } from "lucide-react";
 
 interface MapProps {
   data: MiningGeoJSON | null;
   onSelectDetection: (detection: MiningDetection | null) => void;
   selectedDetection: MiningDetection | null;
   probabilityFilter: number;
+  onFilterChange: (value: number) => void;
   showPoints: boolean;
+  onToggleShowPoints: () => void;
+  detectionCount?: number;
+  initialCenter?: [number, number];
+  initialZoom?: number;
+  hideRequestButton?: boolean;
 }
 
 const BASEMAPS = {
@@ -28,13 +40,17 @@ type BasemapKey = keyof typeof BASEMAPS;
 
 const GEE_API = process.env.NEXT_PUBLIC_TILE_SERVER_URL || "https://minningbackend-production.up.railway.app";
 
-export default function Map({ data, onSelectDetection, selectedDetection, probabilityFilter, showPoints }: MapProps) {
+export default function Map({ data, onSelectDetection, selectedDetection, probabilityFilter, onFilterChange, showPoints, onToggleShowPoints, detectionCount, initialCenter, initialZoom, hideRequestButton }: MapProps) {
   const mapContainer = useRef<HTMLDivElement>(null);
   const compareMapContainer = useRef<HTMLDivElement>(null);
   const mapRef = useRef<any>(null);
   const compareMapRef = useRef<any>(null);
   const [status, setStatus] = useState<string>("Loading MapLibre...");
   const [basemap, setBasemap] = useState<BasemapKey>("google");
+  const [showBasemapPicker, setShowBasemapPicker] = useState(false);
+  const [showDetectionList, setShowDetectionList] = useState(false);
+  const [showStats, setShowStats] = useState(false);
+  const [showDisplay, setShowDisplay] = useState(false);
   const [compareMode, setCompareMode] = useState(false);
   const [showYearPicker, setShowYearPicker] = useState(false);
   const [compareYear, setCompareYear] = useState<string | null>(null);
@@ -42,10 +58,33 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const [loadingTiles, setLoadingTiles] = useState(false);
+  const [webglError, setWebglError] = useState(false);
+
+  // Check WebGL support
+  const checkWebGLSupport = (): { supported: boolean; error?: string } => {
+    try {
+      const canvas = document.createElement('canvas');
+      const gl = canvas.getContext('webgl2') || canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      if (!gl) {
+        return { supported: false, error: 'WebGL not available' };
+      }
+      return { supported: true };
+    } catch (e) {
+      return { supported: false, error: String(e) };
+    }
+  };
 
   // Initialize main map
   useEffect(() => {
     if (!mapContainer.current || mapRef.current) return;
+
+    // Check WebGL support first
+    const webglCheck = checkWebGLSupport();
+    if (!webglCheck.supported) {
+      setWebglError(true);
+      setStatus('');
+      return;
+    }
 
     import("maplibre-gl").then((maplibregl) => {
       setStatus("Initializing map...");
@@ -109,8 +148,8 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
             }
           ],
         },
-        center: [0, 20],
-        zoom: 2,
+        center: initialCenter || [0, 20],
+        zoom: initialZoom || 2,
         maxZoom: 19,
         minZoom: 1.5,
         renderWorldCopies: false, // Disable flat world copies for cleaner globe view
@@ -118,6 +157,7 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
         dragRotate: true,
         touchZoomRotate: true,
         touchPitch: true,
+        attributionControl: false, // Hide attribution text
       });
 
       mapRef.current = map;
@@ -132,7 +172,13 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
       });
     }).catch((err) => {
       console.error("Failed to load maplibre:", err);
-      setStatus(`Failed to load map library: ${err.message}`);
+      // Check if it's a WebGL error
+      if (err.message?.includes('WebGL') || err.message?.includes('webgl') || err.type === 'webglcontextcreationerror') {
+        setWebglError(true);
+        setStatus('');
+      } else {
+        setStatus(`Failed to load map library: ${err.message}`);
+      }
     });
 
     return () => {
@@ -237,6 +283,7 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
         maxZoom: 18,
         minZoom: 1.5,
         renderWorldCopies: false,
+        attributionControl: false, // Hide attribution text
       });
 
       compareMapRef.current = compareMap;
@@ -295,7 +342,7 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
     }
   }, [basemap]);
 
-  // Add/update data layer
+  // Add/update data layer - SIMPLIFIED to match original working code
   useEffect(() => {
     if (!mapRef.current || !data) return;
 
@@ -687,7 +734,7 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
         </div>
       )}
       
-      {/* Basemap Switcher */}
+      {/* Basemap Switcher - Collapsible */}
       <div
         style={{
           position: "absolute",
@@ -695,6 +742,7 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
           left: "12px",
           zIndex: 20,
           display: "flex",
+          flexDirection: "column",
           gap: "6px",
           background: "rgba(0, 0, 0, 0.9)",
           backdropFilter: "blur(12px)",
@@ -702,50 +750,144 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
           borderRadius: "14px",
           boxShadow: "0 0 30px rgba(11, 87, 26, 0.3)",
           border: "1px solid rgba(11, 87, 26, 0.4)",
+          transition: "all 0.3s ease",
         }}
       >
-        {(Object.keys(BASEMAPS) as BasemapKey[]).map((key) => (
-          <button
-            key={key}
-            onClick={() => setBasemap(key)}
-            style={{
-              padding: "8px 14px",
-              fontSize: "12px",
-              fontWeight: basemap === key ? "600" : "400",
-              background: basemap === key ? "#0B571A" : "transparent",
-              color: basemap === key ? "white" : "#9ca3af",
-              border: "none",
-              borderRadius: "10px",
-              cursor: "pointer",
-              transition: "all 0.2s",
-              boxShadow: basemap === key ? "0 0 15px rgba(11, 87, 26, 0.5)" : "none",
-            }}
-          >
-            {BASEMAPS[key].name}
-          </button>
-        ))}
-        {!compareMode && (
-          <button
-            onClick={() => setShowYearPicker(true)}
-            style={{
-              padding: "8px 14px",
-              fontSize: "12px",
-              fontWeight: "600",
-              background: "#0B571A",
-              color: "white",
-              border: "none",
-              borderRadius: "10px",
-              cursor: "pointer",
-              transition: "all 0.2s",
-              boxShadow: "0 0 15px rgba(11, 87, 26, 0.4)",
-            }}
-          >
-            🔄 Compare Years
-          </button>
+        {/* Toggle Button - Always visible */}
+        <button
+          onClick={() => setShowBasemapPicker(!showBasemapPicker)}
+          style={{
+            padding: "8px 14px",
+            fontSize: "12px",
+            fontWeight: "600",
+            background: "#0B571A",
+            color: "white",
+            border: "none",
+            borderRadius: "10px",
+            cursor: "pointer",
+            transition: "all 0.2s",
+            boxShadow: "0 0 15px rgba(11, 87, 26, 0.5)",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            justifyContent: "space-between",
+            minWidth: showBasemapPicker ? "180px" : "auto",
+          }}
+        >
+          <span>🗺️ {BASEMAPS[basemap].name}</span>
+          <span style={{ 
+            transform: showBasemapPicker ? "rotate(180deg)" : "rotate(0deg)",
+            transition: "transform 0.2s",
+            fontSize: "10px",
+          }}>
+            ▼
+          </span>
+        </button>
+
+        {/* Expanded Options */}
+        {showBasemapPicker && (
+          <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+            {(Object.keys(BASEMAPS) as BasemapKey[]).map((key) => (
+              <button
+                key={key}
+                onClick={() => {
+                  setBasemap(key);
+                  setShowBasemapPicker(false);
+                }}
+                style={{
+                  padding: "8px 14px",
+                  fontSize: "12px",
+                  fontWeight: basemap === key ? "600" : "400",
+                  background: basemap === key ? "rgba(11, 87, 26, 0.5)" : "transparent",
+                  color: basemap === key ? "white" : "#9ca3af",
+                  border: "none",
+                  borderRadius: "10px",
+                  cursor: "pointer",
+                  transition: "all 0.2s",
+                  textAlign: "left",
+                }}
+              >
+                {basemap === key ? "✓ " : "   "}{BASEMAPS[key].name}
+              </button>
+            ))}
+            {!compareMode && (
+              <button
+                onClick={() => {
+                  setShowYearPicker(true);
+                  setShowBasemapPicker(false);
+                }}
+                style={{
+                  padding: "8px 14px",
+                  fontSize: "12px",
+                  fontWeight: "500",
+                  background: "transparent",
+                  color: "#9ca3af",
+                  border: "1px solid rgba(11, 87, 26, 0.4)",
+                  borderRadius: "10px",
+                  cursor: "pointer",
+                  transition: "all 0.2s",
+                  textAlign: "left",
+                  marginTop: "4px",
+                }}
+              >
+                <RefreshCw size={14} style={{ display: "inline", marginRight: "6px" }} /> Compare Years
+              </button>
+            )}
+          </div>
         )}
       </div>
 
-      {status && (
+      {/* Stats Button - Top Left */}
+      <StatsButton 
+        data={data} 
+        probabilityFilter={probabilityFilter} 
+        showStats={showStats} 
+        setShowStats={setShowStats} 
+      />
+
+      {/* Display Control Button - Below Stats */}
+      <DisplayControlButton 
+        showPoints={showPoints} 
+        onToggleShowPoints={onToggleShowPoints} 
+        showDisplay={showDisplay} 
+        setShowDisplay={setShowDisplay} 
+      />
+
+      {/* Detection List Panel - Bottom Right */}
+      <DetectionListPanel
+        data={data}
+        probabilityFilter={probabilityFilter}
+        selectedDetection={selectedDetection}
+        onSelectDetection={onSelectDetection}
+        detectionCount={detectionCount}
+        showDetectionList={showDetectionList}
+        setShowDetectionList={setShowDetectionList}
+        mapRef={mapRef}
+      />
+
+      {/* Floating Filter Button - Top Left */}
+      <FloatingFilterButton
+        probabilityFilter={probabilityFilter}
+        onFilterChange={onFilterChange}
+      />
+
+      {/* Search Report Button - Top Left */}
+      {!hideRequestButton && (
+        <SearchReportButton
+          onLocationSearch={(coords) => {
+            const [lat, lon] = coords.split(",").map(Number);
+            if (mapRef.current && !isNaN(lat) && !isNaN(lon)) {
+              mapRef.current.flyTo({
+                center: [lon, lat],
+                zoom: 12,
+                duration: 2000
+              });
+            }
+          }}
+        />
+      )}
+
+      {status && !webglError && (
         <div
           style={{
             position: "absolute",
@@ -765,6 +907,9 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
           {status}
         </div>
       )}
+
+      {/* WebGL Error Help Screen */}
+      <WebGLErrorScreen visible={webglError} />
     </div>
   );
 }

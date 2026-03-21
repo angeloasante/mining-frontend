@@ -1,6 +1,7 @@
 "use client";
 
 import { MiningGeoJSON, MiningDetection } from "@/types/geojson";
+import { Search } from "lucide-react";
 
 interface DetectionListProps {
   data: MiningGeoJSON | null;
@@ -85,7 +86,7 @@ export default function DetectionList({
         )}
         {sorted.length === 0 && (
           <div className="p-6 text-center text-gray-500">
-            <span className="text-2xl block mb-2">🔍</span>
+            <Search size={24} className="mx-auto mb-2" />
             <span className="text-xs">No detections match filters</span>
           </div>
         )}

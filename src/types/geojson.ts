@@ -4,7 +4,13 @@ export interface MiningDetection {
     lat: number;
     lon: number;
     probability: number;
-    tile: string;
+    tile?: string;
+    region?: string;
+    detected_at?: string;
+    model_version?: string;
+    area_ha?: number;
+    is_licensed?: boolean;
+    location_name?: string; // Reverse geocoded location
   };
   geometry: {
     type: "Point";
@@ -14,12 +20,18 @@ export interface MiningDetection {
 
 export interface MiningGeoJSON {
   type: "FeatureCollection";
-  name: string;
-  crs: {
+  name?: string;
+  crs?: {
     type: string;
     properties: {
       name: string;
     };
   };
   features: MiningDetection[];
+  metadata?: {
+    generated_at?: string;
+    model_version?: string;
+    regions?: string[];
+    total_detections?: number;
+  };
 }
