@@ -170,8 +170,8 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
 
   return (
     <div className="h-screen w-full relative">
-      {/* Report header overlay */}
-      <div className="absolute top-4 left-4 z-30 glass-card p-4 max-w-sm">
+      {/* Report header overlay - top right to avoid overlap with map controls */}
+      <div className="absolute top-4 right-4 z-30 glass-card p-4 max-w-xs">
         <div className="flex items-start justify-between mb-2">
           <div>
             <div className="flex items-center space-x-2 mb-1">
@@ -186,7 +186,7 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
           </div>
           <a
             href="/"
-            className="text-gray-400 hover:text-white transition-colors"
+            className="text-gray-400 hover:text-white transition-colors ml-3"
             title="Back to main map"
           >
             <ArrowLeft size={16} />
