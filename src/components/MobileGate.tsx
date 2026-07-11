@@ -1,19 +1,22 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Monitor } from "lucide-react";
+import { Monitor, ArrowRight } from "lucide-react";
 
-// The map explorer is too dense for phone screens: compare slider, control
-// columns, detection panels and the map itself all compete for space. Below
-// this width we show a full-screen notice instead of a broken experience.
-// Tablets (>= 768px) and up are allowed.
+// The map explorer is designed for larger displays: the compare slider,
+// control columns, detection panels and the map itself compete for space.
+// Below this width we present a notice first — visitors may still choose
+// to continue on a phone, and that choice persists for the session.
 const MIN_WIDTH = 768;
+const BYPASS_KEY = "ecohealth-mobile-bypass";
 
 export default function MobileGate({ children }: { children: React.ReactNode }) {
   // null until measured on the client — render nothing to avoid a flash
   const [tooSmall, setTooSmall] = useState<boolean | null>(null);
+  const [bypassed, setBypassed] = useState(false);
 
   useEffect(() => {
+    setBypassed(sessionStorage.getItem(BYPASS_KEY) === "1");
     const mq = window.matchMedia(`(max-width: ${MIN_WIDTH - 1}px)`);
     const update = () => setTooSmall(mq.matches);
     update();
@@ -23,7 +26,7 @@ export default function MobileGate({ children }: { children: React.ReactNode }) 
 
   if (tooSmall === null) return null;
 
-  if (tooSmall) {
+  if (tooSmall && !bypassed) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center px-8 text-center">
         <div>
@@ -31,19 +34,30 @@ export default function MobileGate({ children }: { children: React.ReactNode }) 
             <Monitor size={28} className="text-[#0B571A]" />
           </div>
           <h1 className="text-xl font-semibold text-white mb-3">
-            This screen is too small
+            Best experienced on a larger screen
           </h1>
-          <p className="text-sm text-gray-400 leading-relaxed max-w-xs mx-auto mb-6">
-            The detection map packs in satellite imagery, year-by-year
-            comparison, and live site data — more than a phone screen can
-            hold. Please open it on a laptop, desktop, or tablet.
+          <p className="text-sm text-gray-400 leading-relaxed max-w-xs mx-auto mb-8">
+            For the full, immersive experience — the interactive satellite map,
+            year-by-year comparison, and live detection data — we recommend a
+            laptop, desktop, or tablet. On a phone, the experience is
+            significantly reduced.
           </p>
-          <p className="text-xs text-gray-600">
-            Meanwhile, you can visit{" "}
+          <button
+            type="button"
+            onClick={() => {
+              sessionStorage.setItem(BYPASS_KEY, "1");
+              setBypassed(true);
+            }}
+            className="inline-flex items-center gap-2 bg-[#0B571A] hover:bg-[#0B571A]/80 text-white text-sm font-medium px-6 py-3 rounded-full transition-colors"
+          >
+            Continue on this device
+            <ArrowRight size={15} />
+          </button>
+          <p className="text-xs text-gray-600 mt-6">
+            Or learn about the project at{" "}
             <a href="https://ecohealthgh.com" className="text-[#0B571A] underline">
               ecohealthgh.com
-            </a>{" "}
-            to learn about the project.
+            </a>
           </p>
         </div>
       </div>
