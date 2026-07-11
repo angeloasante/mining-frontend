@@ -170,8 +170,8 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
 
   return (
     <div className="h-screen w-full relative">
-      {/* Report header overlay - top right to avoid overlap with map controls */}
-      <div className="absolute top-4 right-4 z-30 glass-card p-4 max-w-xs">
+      {/* Report panel - bottom left, above map controls */}
+      <div className="absolute bottom-6 left-3 z-30 glass-card p-4 max-w-xs">
         <div className="flex items-start justify-between mb-2">
           <div>
             <div className="flex items-center space-x-2 mb-1">
@@ -204,6 +204,22 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
           </div>
         </div>
 
+        {/* Confidence slider */}
+        <div className="mt-3">
+          <div className="flex justify-between items-center mb-1">
+            <label className="text-[10px] text-gray-500 uppercase">Min Confidence</label>
+            <span className="text-xs font-bold text-[#0B571A]">{Math.round(probabilityFilter * 100)}%</span>
+          </div>
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value={probabilityFilter * 100}
+            onChange={(e) => setProbabilityFilter(Number(e.target.value) / 100)}
+            className="w-full accent-[#0B571A]"
+          />
+        </div>
+
         {metadata?.generated_at && (
           <p className="text-[10px] text-gray-500 mt-2">
             Generated {new Date(metadata.generated_at).toLocaleDateString()}
@@ -211,7 +227,7 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
         )}
 
         <p className="text-[10px] text-gray-500 mt-1">
-          Report available for 7 days • ID: {id}
+          Report available for 7 days &bull; ID: {id}
         </p>
       </div>
 
@@ -228,6 +244,7 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
         initialCenter={metadata?.center ? [metadata.center.lon, metadata.center.lat] : undefined}
         initialZoom={12}
         hideRequestButton={true}
+        hideFilterButton={true}
       />
     </div>
   );

@@ -21,6 +21,7 @@ interface MapProps {
   initialCenter?: [number, number];
   initialZoom?: number;
   hideRequestButton?: boolean;
+  hideFilterButton?: boolean;
 }
 
 const BASEMAPS = {
@@ -40,7 +41,7 @@ type BasemapKey = keyof typeof BASEMAPS;
 
 const GEE_API = process.env.NEXT_PUBLIC_TILE_SERVER_URL || "https://minningbackend-production.up.railway.app";
 
-export default function Map({ data, onSelectDetection, selectedDetection, probabilityFilter, onFilterChange, showPoints, onToggleShowPoints, detectionCount, initialCenter, initialZoom, hideRequestButton }: MapProps) {
+export default function Map({ data, onSelectDetection, selectedDetection, probabilityFilter, onFilterChange, showPoints, onToggleShowPoints, detectionCount, initialCenter, initialZoom, hideRequestButton, hideFilterButton }: MapProps) {
   const mapContainer = useRef<HTMLDivElement>(null);
   const compareMapContainer = useRef<HTMLDivElement>(null);
   const mapRef = useRef<any>(null);
@@ -55,6 +56,8 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
   const [showYearPicker, setShowYearPicker] = useState(false);
   const [compareYear, setCompareYear] = useState<string | null>(null);
   const [compareTileUrl, setCompareTileUrl] = useState<string | null>(null);
+  const [compareSource, setCompareSource] = useState<string | null>(null);
+  const [compareReleaseDate, setCompareReleaseDate] = useState<string | null>(null);
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const [loadingTiles, setLoadingTiles] = useState(false);
@@ -198,6 +201,8 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
       if (data.success) {
         setCompareTileUrl(data.tileUrl);
         setCompareYear(year);
+        setCompareSource(data.source || "sentinel-2");
+        setCompareReleaseDate(data.releaseDate || null);
         setShowYearPicker(false);
         setCompareMode(true);
       } else {
@@ -214,6 +219,10 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
   // Initialize compare map when tile URL is ready
   useEffect(() => {
     if (!compareMode || !compareTileUrl || compareMapRef.current) return;
+
+    // Track the main-map sync handler so cleanup can detach it; otherwise
+    // every year switch stacks another handler and the maps fight over the camera
+    let mainMoveHandler: (() => void) | null = null;
 
     // Wait a tick for the conditional DOM element to mount and ref to attach
     const timer = setTimeout(() => {
@@ -280,7 +289,7 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
         },
         center: [currentCenter.lng, currentCenter.lat],
         zoom: currentZoom,
-        maxZoom: 18,
+        maxZoom: 19, // must match the main map or the two sides desync at max zoom
         minZoom: 1.5,
         renderWorldCopies: false,
         attributionControl: false, // Hide attribution text
@@ -288,42 +297,54 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
 
       compareMapRef.current = compareMap;
 
-      // Sync maps
+      // Sync maps. Attach immediately — NOT inside compareMap.on("load") —
+      // because "load" waits for all initial tiles; panning during that window
+      // would leave the compare map frozen, then snapping once tiles arrive.
+      let isSyncing = false;
+
+      const syncMove = (sourceMap: any, targetMap: any) => {
+        if (isSyncing || !sourceMap || !targetMap) return;
+        isSyncing = true;
+        try {
+          // Single jumpTo = one camera event on the target, not four
+          targetMap.jumpTo({
+            center: sourceMap.getCenter(),
+            zoom: sourceMap.getZoom(),
+            bearing: sourceMap.getBearing(),
+            pitch: sourceMap.getPitch(),
+          });
+        } catch (e) {
+          // Map may have been removed
+        }
+        isSyncing = false;
+      };
+
+      mainMoveHandler = () => {
+        if (mapRef.current && compareMapRef.current) {
+          syncMove(mapRef.current, compareMapRef.current);
+        }
+      };
+      mapRef.current?.on("move", mainMoveHandler);
+      // The compare map's own handler dies with it on remove(), no cleanup needed
+      compareMap.on("move", () => {
+        if (mapRef.current && compareMapRef.current) {
+          syncMove(compareMapRef.current, mapRef.current);
+        }
+      });
+      // Catch up any drift that happened while initial tiles loaded
       compareMap.on("load", () => {
-        if (!mapRef.current || !compareMapRef.current) return;
-
-        let isSyncing = false;
-
-        const syncMove = (sourceMap: any, targetMap: any) => {
-          if (isSyncing || !sourceMap || !targetMap) return;
-          isSyncing = true;
-          try {
-            targetMap.setCenter(sourceMap.getCenter());
-            targetMap.setZoom(sourceMap.getZoom());
-            targetMap.setBearing(sourceMap.getBearing());
-            targetMap.setPitch(sourceMap.getPitch());
-          } catch (e) {
-            // Map may have been removed
-          }
-          isSyncing = false;
-        };
-
-        mapRef.current.on("move", () => {
-          if (mapRef.current && compareMapRef.current) {
-            syncMove(mapRef.current, compareMapRef.current);
-          }
-        });
-        compareMapRef.current.on("move", () => {
-          if (mapRef.current && compareMapRef.current) {
-            syncMove(compareMapRef.current, mapRef.current);
-          }
-        });
+        if (mapRef.current && compareMapRef.current) {
+          syncMove(mapRef.current, compareMapRef.current);
+        }
       });
     });
     });
 
     return () => {
       clearTimeout(timer);
+      if (mainMoveHandler && mapRef.current) {
+        mapRef.current.off("move", mainMoveHandler);
+      }
       if (compareMapRef.current) {
         compareMapRef.current.remove();
         compareMapRef.current = null;
@@ -466,6 +487,8 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
     setCompareMode(false);
     setCompareYear(null);
     setCompareTileUrl(null);
+    setCompareSource(null);
+    setCompareReleaseDate(null);
     if (compareMapRef.current) {
       compareMapRef.current.remove();
       compareMapRef.current = null;
@@ -561,8 +584,10 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
         <>
           <div style={{
             position: "absolute",
-            top: "16px",
-            left: "16px",
+            bottom: "24px",
+            right: `calc(${100 - sliderPosition}% + 14px)`,
+            textAlign: "right",
+            whiteSpace: "nowrap",
             background: "rgba(11, 87, 26, 0.9)",
             backdropFilter: "blur(8px)",
             color: "white",
@@ -574,12 +599,33 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
             boxShadow: "0 0 20px rgba(11, 87, 26, 0.5)",
             border: "1px solid rgba(255,255,255,0.1)",
           }}>
-            🛰️ {compareYear} (Sentinel-2)
+            🛰️ {compareYear} ({compareSource === "esri-wayback" ? "Esri World Imagery" : "Sentinel-2"})
+            {compareSource === "esri-wayback" && compareReleaseDate && (
+              <div style={{
+                fontWeight: "normal",
+                fontSize: "11px",
+                opacity: 0.85,
+                marginTop: "2px",
+              }}>
+                Imagery version: {compareReleaseDate}
+              </div>
+            )}
+            {compareSource === "sentinel-2" && (
+              <div style={{
+                fontWeight: "normal",
+                fontSize: "11px",
+                opacity: 0.85,
+                marginTop: "2px",
+              }}>
+                10 m satellite — detail limited at close zoom
+              </div>
+            )}
           </div>
           <div style={{
             position: "absolute",
-            top: "16px",
-            right: "70px",
+            bottom: "24px",
+            left: `calc(${sliderPosition}% + 14px)`,
+            whiteSpace: "nowrap",
             background: "rgba(11, 87, 26, 0.9)",
             backdropFilter: "blur(8px)",
             color: "white",
@@ -591,7 +637,7 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
             boxShadow: "0 0 20px rgba(11, 87, 26, 0.5)",
             border: "1px solid rgba(255,255,255,0.1)",
           }}>
-            🛰️ 2026 (Current)
+            🛰️ {new Date().getFullYear()} (Current)
           </div>
         </>
       )}
@@ -656,7 +702,7 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
               🛰️ Compare Historical Imagery
             </h3>
             <p style={{ margin: "0 0 20px 0", color: "#9ca3af", fontSize: "14px" }}>
-              Select a year to compare Sentinel-2 imagery from Google Earth Engine. 
+              Select a year to compare high-resolution historical satellite imagery.
               Drag the slider to reveal changes in mining activity.
             </p>
             
@@ -671,7 +717,7 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
                   margin: "0 auto 12px",
                   animation: "spin 1s linear infinite",
                 }}></div>
-                <p style={{ color: "#9ca3af" }}>Loading GEE imagery...</p>
+                <p style={{ color: "#9ca3af" }}>Loading historical imagery...</p>
                 <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
               </div>
             )}
@@ -866,10 +912,12 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
       />
 
       {/* Floating Filter Button - Top Left */}
-      <FloatingFilterButton
-        probabilityFilter={probabilityFilter}
-        onFilterChange={onFilterChange}
-      />
+      {!hideFilterButton && (
+        <FloatingFilterButton
+          probabilityFilter={probabilityFilter}
+          onFilterChange={onFilterChange}
+        />
+      )}
 
       {/* Search Report Button - Top Left */}
       {!hideRequestButton && (

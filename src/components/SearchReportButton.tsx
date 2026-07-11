@@ -23,6 +23,7 @@ export function SearchReportButton({ onLocationSearch }: SearchReportButtonProps
     residency: "",
     reason: "",
     organization: "",
+    notify: "email" as "email" | "sms" | "both",
   });
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -68,8 +69,15 @@ export function SearchReportButton({ onLocationSearch }: SearchReportButtonProps
   const isValidEmail = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
+  // Ghana numbers: 0XXXXXXXXX, 233XXXXXXXXX or +233XXXXXXXXX
+  const isValidPhone = (phone: string) =>
+    /^(\+?233|0)\d{9}$/.test(phone.replace(/[\s-]/g, ""));
+
+  const smsSelected = formData.notify === "sms" || formData.notify === "both";
+
   const canSubmit =
-    selectedTown && formData.email && isValidEmail(formData.email) && formData.name && !submitting;
+    selectedTown && formData.email && isValidEmail(formData.email) && formData.name &&
+    (!smsSelected || isValidPhone(formData.phone)) && !submitting;
 
   const handleSubmitReport = async () => {
     if (!selectedTown || !canSubmit) return;
@@ -97,6 +105,7 @@ export function SearchReportButton({ onLocationSearch }: SearchReportButtonProps
           residency: formData.residency,
           reason: formData.reason,
           organization: formData.organization,
+          notify: formData.notify,
         }),
       });
 
@@ -115,7 +124,7 @@ export function SearchReportButton({ onLocationSearch }: SearchReportButtonProps
   };
 
   const handleReset = () => {
-    setFormData({ name: "", email: "", phone: "", residency: "", reason: "", organization: "" });
+    setFormData({ name: "", email: "", phone: "", residency: "", reason: "", organization: "", notify: "email" });
     setSearchQuery("");
     setSelectedTown(null);
     setSubmitResult(null);
@@ -239,7 +248,7 @@ export function SearchReportButton({ onLocationSearch }: SearchReportButtonProps
 
               {/* Divider */}
               <div className="border-t border-white/10 my-4 pt-4">
-                <p className="text-xs text-gray-400 mb-3">Your details (we&apos;ll email your report)</p>
+                <p className="text-xs text-gray-400 mb-3">Your details (we&apos;ll send you your report link)</p>
               </div>
 
               {/* Report Form */}
@@ -281,19 +290,58 @@ export function SearchReportButton({ onLocationSearch }: SearchReportButtonProps
                   )}
                 </div>
 
+                {/* Notification preference */}
+                <div>
+                  <label className="flex items-center space-x-2 text-xs text-gray-400 mb-1.5">
+                    <Mail size={12} />
+                    <span>Notify me via</span>
+                  </label>
+                  <div className="flex gap-2">
+                    {([
+                      { key: "email", label: "Email" },
+                      { key: "sms", label: "SMS" },
+                      { key: "both", label: "Both" },
+                    ] as const).map(({ key, label }) => (
+                      <button
+                        key={key}
+                        type="button"
+                        onClick={() => setFormData({ ...formData, notify: key })}
+                        className={`flex-1 py-2 rounded-lg text-xs font-medium border transition-colors ${
+                          formData.notify === key
+                            ? "bg-[#0B571A] border-[#0B571A] text-white"
+                            : "bg-black/60 border-[#0B571A]/30 text-gray-400 hover:border-[#0B571A]/60"
+                        }`}
+                      >
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
                 {/* Phone */}
                 <div>
                   <label className="flex items-center space-x-2 text-xs text-gray-400 mb-1.5">
                     <Phone size={12} />
-                    <span>Phone (optional)</span>
+                    <span>
+                      Phone {smsSelected ? <span className="text-red-400">*</span> : "(optional)"}
+                    </span>
                   </label>
                   <input
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     placeholder="+233 XX XXX XXXX"
-                    className="w-full bg-black/60 border border-[#0B571A]/30 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#0B571A] transition-colors"
+                    className={`w-full bg-black/60 border rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none transition-colors ${
+                      smsSelected && formData.phone && !isValidPhone(formData.phone)
+                        ? "border-red-500/50 focus:border-red-500"
+                        : "border-[#0B571A]/30 focus:border-[#0B571A]"
+                    }`}
                   />
+                  {smsSelected && formData.phone && !isValidPhone(formData.phone) && (
+                    <p className="text-red-400 text-[10px] mt-1">
+                      Enter a valid Ghana number (e.g. 024 XXX XXXX or +233 24 XXX XXXX)
+                    </p>
+                  )}
                 </div>
 
                 {/* Residency */}

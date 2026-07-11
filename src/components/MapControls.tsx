@@ -73,12 +73,11 @@ export function StatsButton({ data, probabilityFilter, showStats, setShowStats }
         </svg>
       </div>
 
-      {/* Expanded Stats Panel */}
+      {/* Expanded Stats Panel — outer div bridges the gap to the button so
+          the hover area is continuous and the panel doesn't vanish mid-move */}
       {showStats && data && (
-        <div style={{ 
-          position: "absolute",
-          top: "0",
-          left: "54px",
+        <div style={{ position: "absolute", top: "0", left: "44px", paddingLeft: "10px" }}>
+        <div style={{
           background: "rgba(0, 0, 0, 0.92)",
           backdropFilter: "blur(12px)",
           borderRadius: "12px",
@@ -112,6 +111,7 @@ export function StatsButton({ data, probabilityFilter, showStats, setShowStats }
               <span style={{ fontSize: "14px", fontWeight: "600", color: "#0B571A" }}>{lowConf}</span>
             </div>
           </div>
+        </div>
         </div>
       )}
     </div>
@@ -167,12 +167,11 @@ export function DisplayControlButton({ showPoints, onToggleShowPoints, showDispl
         </svg>
       </div>
 
-      {/* Expanded Display Panel */}
+      {/* Expanded Display Panel — outer div bridges the gap to the button so
+          the hover area is continuous and the panel doesn't vanish mid-move */}
       {showDisplay && (
-        <div style={{ 
-          position: "absolute",
-          top: "0",
-          left: "54px",
+        <div style={{ position: "absolute", top: "0", left: "44px", paddingLeft: "10px" }}>
+        <div style={{
           background: "rgba(0, 0, 0, 0.92)",
           backdropFilter: "blur(12px)",
           borderRadius: "12px",
@@ -218,6 +217,7 @@ export function DisplayControlButton({ showPoints, onToggleShowPoints, showDispl
               {showPoints ? "On" : "Off"}
             </button>
           </div>
+        </div>
         </div>
       )}
     </div>

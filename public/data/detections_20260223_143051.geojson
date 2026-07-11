@@ -1,0 +1,16 @@
+{
+  "type": "FeatureCollection",
+  "features": [],
+  "metadata": {
+    "generated_at": "2026-02-23T14:30:51.452933",
+    "model_version": "48px_v3.7_2024-01-10",
+    "threshold": 0.8,
+    "regions": [
+      "ghana_tarkwa",
+      "ghana_obuasi"
+    ],
+    "total_detections": 0,
+    "high_confidence": 0,
+    "medium_confidence": 0
+  }
+}
