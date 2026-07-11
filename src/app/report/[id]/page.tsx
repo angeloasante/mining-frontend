@@ -4,6 +4,7 @@ import { useState, useEffect, use } from "react";
 import dynamic from "next/dynamic";
 import { MiningGeoJSON, MiningDetection } from "@/types/geojson";
 import { MapPin, Clock, AlertTriangle, ArrowLeft, Loader2 } from "lucide-react";
+import { SelectedDetectionPanel } from "@/components/SelectedDetectionPanel";
 
 const Map = dynamic(() => import("@/components/Map"), {
   ssr: false,
@@ -170,8 +171,9 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
 
   return (
     <div className="h-screen w-full relative">
-      {/* Report panel - bottom left, above map controls */}
-      <div className="absolute bottom-6 left-3 z-30 glass-card p-4 max-w-xs">
+      {/* Report panel - bottom left, sitting above the basemap switcher so
+          the switcher (and its Compare Years button) stays clickable */}
+      <div className="absolute bottom-24 left-3 z-10 glass-card p-4 max-w-xs">
         <div className="flex items-start justify-between mb-2">
           <div>
             <div className="flex items-center space-x-2 mb-1">
@@ -246,6 +248,14 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
         hideRequestButton={true}
         hideFilterButton={true}
       />
+
+      {/* Selected Detection Info — same panel as the main map */}
+      {selectedDetection && (
+        <SelectedDetectionPanel
+          detection={selectedDetection}
+          onClose={() => setSelectedDetection(null)}
+        />
+      )}
     </div>
   );
 }
