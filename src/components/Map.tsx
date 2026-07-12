@@ -7,6 +7,7 @@ import { DetectionListPanel } from "./DetectionListPanel";
 import { WebGLErrorScreen } from "./WebGLErrorScreen";
 import { FloatingFilterButton } from "./FloatingFilterButton";
 import { SearchReportButton } from "./SearchReportButton";
+import { OnboardingModal } from "./OnboardingModal";
 import { RefreshCw } from "lucide-react";
 
 interface MapProps {
@@ -970,6 +971,9 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
 
       {/* WebGL Error Help Screen */}
       <WebGLErrorScreen visible={webglError} />
+
+      {/* First-visit onboarding */}
+      {!webglError && <OnboardingModal />}
     </div>
   );
 }
