@@ -62,6 +62,15 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
   const [isDragging, setIsDragging] = useState(false);
   const [loadingTiles, setLoadingTiles] = useState(false);
   const [webglError, setWebglError] = useState(false);
+  // Flips when the map instance finishes loading, so effects that need the
+  // map re-run even when data arrived first (data-vs-map init race)
+  const [mapReady, setMapReady] = useState(false);
+
+  // Debug handle for local development only (never exposed in production)
+  if (typeof window !== "undefined" && window.location.hostname === "localhost") {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any).__maps = { main: mapRef, compare: compareMapRef };
+  }
 
   // Check WebGL support
   const checkWebGLSupport = (): { supported: boolean; error?: string } => {
@@ -167,6 +176,7 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
 
       map.on("load", () => {
         setStatus("");
+        setMapReady(true);
         map.addControl(new maplibregl.default.NavigationControl(), "top-right");
       });
 
@@ -460,7 +470,9 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
     } else {
       map.on("load", addData);
     }
-  }, [data, probabilityFilter, onSelectDetection, showPoints]);
+    // mapReady in deps: re-run once the map finishes initializing, covering
+    // the case where detection data arrived before the map existed
+  }, [data, probabilityFilter, onSelectDetection, showPoints, mapReady]);
 
   // Toggle visibility
   useEffect(() => {
