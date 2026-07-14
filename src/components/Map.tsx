@@ -464,6 +464,12 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
       map.on("mouseleave", "mining-circles", () => {
         map.getCanvas().style.cursor = "";
       });
+
+      // Globe projection sometimes skips painting layers added while the
+      // camera is idle, leaving markers invisible until the user moves the
+      // map. Nudge the render loop so they always show immediately.
+      map.triggerRepaint();
+      setTimeout(() => map.triggerRepaint(), 300);
     };
 
     if (map.loaded()) {

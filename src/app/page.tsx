@@ -26,28 +26,28 @@ export default function Home() {
   const [showPoints, setShowPoints] = useState(true);
 
   useEffect(() => {
-    // Fetch from tile server API (Railway) which pulls from GitHub
+    // Fetch detections, falling through on ANY failure (HTTP error or
+    // network refusal) so one dead source never blanks the whole map:
+    // Railway API -> local API route -> bundled static snapshot.
     const TILE_SERVER = process.env.NEXT_PUBLIC_TILE_SERVER_URL || 'https://minningbackend-production.up.railway.app';
-    
-    fetch(`${TILE_SERVER}/api/detections`)
-      .then((res) => {
-        if (!res.ok) {
-          // Fallback to local API route
-          return fetch("/api/detections");
+    const sources = [
+      `${TILE_SERVER}/api/detections`,
+      "/api/detections",
+      "/ghana_tarkwa_mining_wgs84.geojson",
+    ];
+
+    (async () => {
+      for (const url of sources) {
+        try {
+          const res = await fetch(url);
+          if (!res.ok) continue;
+          return (await res.json()) as MiningGeoJSON;
+        } catch {
+          continue;
         }
-        return res;
-      })
-      .then((res) => {
-        if (!res.ok) {
-          // Final fallback to static file
-          return fetch("/ghana_tarkwa_mining_wgs84.geojson");
-        }
-        return res;
-      })
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to load data");
-        return res.json();
-      })
+      }
+      throw new Error("Failed to load data");
+    })()
       .then((geojson: MiningGeoJSON) => {
         setData(geojson);
         setLoading(false);
