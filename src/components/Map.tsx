@@ -472,13 +472,14 @@ export default function Map({ data, onSelectDetection, selectedDetection, probab
       setTimeout(() => map.triggerRepaint(), 300);
     };
 
-    if (map.loaded()) {
+    // Gate on our own mapReady flag, NOT map.loaded(): loaded() is false
+    // whenever any tile is still in flight, and the "load" event only fires
+    // once — so checking loaded() after that point registered a listener
+    // that never fired and the layers were never added (the production
+    // "invisible markers" bug).
+    if (mapReady) {
       addData();
-    } else {
-      map.on("load", addData);
     }
-    // mapReady in deps: re-run once the map finishes initializing, covering
-    // the case where detection data arrived before the map existed
   }, [data, probabilityFilter, onSelectDetection, showPoints, mapReady]);
 
   // Toggle visibility
